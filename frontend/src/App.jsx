@@ -4,7 +4,7 @@ import AddBook from './components/AddBook';
 import SearchBook from './components/SearchBook';
 import BookCard from './components/BookCard';
 import SearchedBook from './components/SearchedBook';
-import UpdateBookModal from './components/UpdateBookModal';
+import UpdateBookModal from './components/UpdatedBookModal';
 import './App.css';
 
 const API_URL = 'http://localhost:5000/api/books';

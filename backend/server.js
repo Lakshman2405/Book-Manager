@@ -1,28 +1,28 @@
 const express = require('express');
 const cors = require('cors');
+const dotenv = require('dotenv');
 const connectDB = require('./config/database');
 const bookRoutes = require('./routes/bookRoutes');
 const errorHandler = require('./middleware/errorhandler');
-require('dotenv').config();
 
-const app = express();
+// ✅ IMPORTANT: Load .env FIRST
+dotenv.config();
 
-// Connect to database
+// ✅ Check if .env loaded correctly
+console.log('MONGODB_URI:', process.env.MONGODB_URI);
+console.log('PORT:', process.env.PORT);
+
 connectDB();
 
-// Middleware
-app.use(cors()); // Enable CORS for React
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Routes
-app.use('/api/books', bookRoutes);
-
-// Error handler
-app.use(errorHandler);
-
+const app = express();
 const PORT = process.env.PORT || 5000;
+
+app.use(cors());
+app.use(express.json());
+app.use('/api/books', bookRoutes);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
     console.log(`✅ Server running on port ${PORT}`);
+    console.log(`📚 API: http://localhost:${PORT}/api/books`);
 });
