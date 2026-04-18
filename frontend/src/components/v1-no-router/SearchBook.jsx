@@ -3,13 +3,14 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:5000/api/books';
 
-function SearchBook({ onBookFound }) {
+function SearchBook({ onBookFound, showAlert }) {
   const [searchId, setSearchId] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState('');
   const [error, setError] = useState('');
 
   const handleSearch = async (e) => {
     e.preventDefault();
+
     if (!searchId.trim()) {
       setError('Please enter a Book ID');
       return;
@@ -21,9 +22,21 @@ function SearchBook({ onBookFound }) {
     try {
       const response = await axios.get(`${API_URL}/${searchId.trim()}`);
       onBookFound(response.data.data);
-      setSearchId(''); // Clear input after successful search
+
+      // ✅ Global alert (success)
+      if (showAlert) {
+        showAlert('Book found successfully', 'success');
+      }
+
+      setSearchId('');
     } catch (err) {
-      setError(err.response?.data?.message || 'Book not found with this ID');
+      const msg = err.response?.data?.message || 'Book not found with this ID';
+      setError(msg);
+
+      // ✅ Global alert (error)
+      if (showAlert) {
+        showAlert(msg, 'error');
+      }
     } finally {
       setLoading(false);
     }

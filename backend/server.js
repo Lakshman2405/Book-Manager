@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/database');
 const bookRoutes = require('./routes/bookRoutes');
 const errorHandler = require('./middleware/errorhandler');
+const taskRoutes = require('./routes/taskRoutes');
 
 // ✅ IMPORTANT: Load .env FIRST
 dotenv.config();
@@ -20,9 +21,11 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 app.use('/api/books', bookRoutes);
+app.use('/api/tasks', taskRoutes);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
     console.log(`✅ Server running on port ${PORT}`);
     console.log(`📚 API: http://localhost:${PORT}/api/books`);
+    console.log(`✅ Tasks API: http://localhost:${PORT}/api/tasks`);
 });

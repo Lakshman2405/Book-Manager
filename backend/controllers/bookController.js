@@ -71,7 +71,7 @@ const updateBook = async (req, res, next) => {
         const book = await Book.findByIdAndUpdate(
             req.params.id,
             req.body,
-            { new: true, runValidators: true }
+            { returnDocument: 'after', runValidators: true}
         );
 
         if (!book) {
@@ -99,10 +99,32 @@ const deleteBook = async (req, res, next) => {
     }
 };
 
+// @desc    Delete one copy (decrease available count)
+// @route   DELETE /api/books/:id/copy
+const deleteCopy = async (req, res, next) => {
+    try {
+        const book = await Book.findById(req.params.id);
+        if (!book) {
+            return res.status(404).json({ success: false, message: 'Book not found' });
+        }
+        
+        if (book.available > 0) {
+            book.available -= 1;
+            await book.save();
+            res.status(200).json({ success: true, message: 'One copy deleted successfully', data: book });
+        } else {
+            res.status(400).json({ success: false, message: 'No copies available to delete' });
+        }
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getBooks,
     getBook,
     createBook,
     updateBook,
-    deleteBook
+    deleteBook,
+    deleteCopy
 };
