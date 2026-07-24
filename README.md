@@ -560,6 +560,7 @@ showAlert('Failed to fetch books', 'error');
 ## Current State
 
 **Fully Implemented:**
+```
 ✅ CRUD operations (Create, Read, Update, Delete)
 ✅ Smart ISBN-based inventory
 ✅ Search by ID
@@ -574,8 +575,10 @@ showAlert('Failed to fetch books', 'error');
 ✅ Responsive UI
 ✅ Loading & error states
 ✅ Confirmation dialogs
+```
 
 **Not Implemented (Future Work):**
+```
 ❌ User authentication
 ❌ Advanced filtering
 ❌ Book ratings/reviews
@@ -584,7 +587,7 @@ showAlert('Failed to fetch books', 'error');
 ❌ Real-time updates
 ❌ Test suite
 ❌ Deployment
-
+```
 ---
 
 ## Commands Reference
